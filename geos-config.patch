@@ -1,0 +1,23 @@
+--- geos-1.0/tools/geos-config.in.orig	2002-09-03 15:53:40.000000000 +0200
++++ geos-1.0/tools/geos-config.in	2004-04-05 22:57:02.028047344 +0200
+@@ -27,16 +27,16 @@
+     echo @prefix@
+      ;;
+     --version)
+-    echo @GEOS_VERSION@
++    echo @VERSION@
+      ;;
+     --cflags)
+-    echo @CFLAGS@ -I@prefix@/include 
++    echo -I@prefix@/include 
+       ;;
+     --libs)
+-      echo -L@prefix@/lib -lgeos
++      echo -L@libdir@ -lgeos
+       ;;
+     --includes)
+-      echo @CFLAGS@ -I@prefix@/include
++      echo -I@prefix@/include
+       ;;
+     *)
+       usage 1 1>&2
