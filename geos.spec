@@ -1,12 +1,12 @@
 Summary:	Geometry Engine - Open Source
 Summary(pl):	GEOS - silnik geometryczny z otwartymi ¼ród³ami
 Name:		geos
-Version:	2.0.0
+Version:	2.0.1
 Release:	1
 License:	LGPL
 Group:		Libraries
 Source0:	http://geos.refractions.net/%{name}-%{version}.tar.bz2
-# Source0-md5:	6918fd037b8cd0b3b2d0c6e075fd339a
+# Source0-md5:	847ce051190d1901b0c2a9f670c6b320
 Patch0:		%{name}-config.patch
 URL:		http://geos.refractions.net/
 BuildRequires:	automake
@@ -87,6 +87,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
 %{_includedir}/geos
+%{_includedir}/geos.h
 
 %files static
 %defattr(644,root,root,755)
