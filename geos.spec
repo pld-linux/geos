@@ -1,13 +1,14 @@
 Summary:	Geometry Engine - Open Source
 Summary(pl):	GEOS - silnik geometryczny z otwartymi ¼ród³ami
 Name:		geos
-Version:	2.1.4
+Version:	2.2.0
 Release:	1
 License:	LGPL
 Group:		Libraries
 Source0:	http://geos.refractions.net/%{name}-%{version}.tar.bz2
-# Source0-md5:	e00524abc2cb26c8fb9173b8696be3b7
+# Source0-md5:	444984e8f55ee9084d7c962255f14801
 Patch0:		%{name}-config.patch
+Patch1:		%{name}-gcc4.patch
 URL:		http://geos.refractions.net/
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
@@ -56,6 +57,7 @@ Statyczna biblioteka GEOS.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 cp -f /usr/share/automake/config.* .
@@ -79,16 +81,21 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS TODO
-%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+%attr(755,root,root) %{_libdir}/libgeos.so.*.*.*
+%attr(755,root,root) %{_libdir}/libgeos_c.so.*.*.*
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/geos-config
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
+%attr(755,root,root) %{_libdir}/libgeos.so
+%attr(755,root,root) %{_libdir}/libgeos_c.so
+%{_libdir}/libgeos.la
+%{_libdir}/libgeos_c.la
 %{_includedir}/geos
 %{_includedir}/geos.h
+%{_includedir}/geos_c.h
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libgeos.a
+%{_libdir}/libgeos_c.a
