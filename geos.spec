@@ -57,16 +57,15 @@ Statyczna biblioteka GEOS.
 
 %package -n python-geos
 Summary:	Python bindings for Geometry Engine - Open Source
-Summary(pl):	Wi您ania Pythona do GEOS
-Group:          Development/Languages/Python
+Summary(pl):	Wi您ania Pythona do biblioteki GEOS
+Group:		Development/Languages/Python
 Requires:	%{name} = %{version}-%{release}
 
 %description -n python-geos
-Python bindings for Geometry Engine - Open Source
+Python bindings for Geometry Engine - Open Source.
 
 %description -n python-geos -l pl
-Wi您ania Pythona do GEOS
-
+Wi您ania Pythona do biblioteki GEOS.
 
 %prep
 %setup -q
