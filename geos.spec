@@ -1,14 +1,15 @@
 Summary:	Geometry Engine - Open Source
 Summary(pl):	GEOS - silnik geometryczny z otwartymi ¼ród³ami
 Name:		geos
-Version:	2.2.0
+Version:	2.2.1
 Release:	1
 License:	LGPL
 Group:		Libraries
 Source0:	http://geos.refractions.net/%{name}-%{version}.tar.bz2
-# Source0-md5:	444984e8f55ee9084d7c962255f14801
+# Source0-md5:	272132bfb64422915d0f748f5e26932b
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-gcc4.patch
+Patch2:		%{name}-swig.patch
 URL:		http://geos.refractions.net/
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
@@ -54,10 +55,24 @@ Static GEOS library.
 %description static -l pl
 Statyczna biblioteka GEOS.
 
+%package -n python-geos
+Summary:	Python bindings for Geometry Engine - Open Source
+Summary(pl):	Wi±zania Pythona do GEOS
+Group:          Development/Languages/Python
+Requires:	%{name} = %{version}-%{release}
+
+%description -n python-geos
+Python bindings for Geometry Engine - Open Source
+
+%description -n python-geos -l pl
+Wi±zania Pythona do GEOS
+
+
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 cp -f /usr/share/automake/config.* .
@@ -65,12 +80,19 @@ cp -f /usr/share/automake/config.* .
 %{__make} \
 	pkglibdir=%{_libdir}
 
+cd swig/python
+swig -c++ -python -modern -o geos_wrap.cxx ../geos.i
+python setup.py build
+
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	pkglibdir=%{_libdir}
+
+cd swig/python
+python setup.py install --root=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -99,3 +121,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libgeos.a
 %{_libdir}/libgeos_c.a
+
+%files -n python-geos
+%defattr(644,root,root,755)
+%{py_sitedir}/geos.pyc
+%attr(755,root,root) %{py_sitedir}/_geos.so
