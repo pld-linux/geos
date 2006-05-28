@@ -1,18 +1,22 @@
 Summary:	Geometry Engine - Open Source
 Summary(pl):	GEOS - silnik geometryczny z otwartymi ¼ród³ami
 Name:		geos
-Version:	2.2.1
+Version:	2.2.2
 Release:	1
 License:	LGPL
 Group:		Libraries
 Source0:	http://geos.refractions.net/%{name}-%{version}.tar.bz2
-# Source0-md5:	272132bfb64422915d0f748f5e26932b
-Patch0:		%{name}-config.patch
-Patch1:		%{name}-gcc4.patch
-Patch2:		%{name}-swig.patch
+# Source0-md5:	daf1f2d863103cc08b17747590af2cef
+Patch0:		%{name}-swig.patch
 URL:		http://geos.refractions.net/
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
+BuildRequires:	python
+BuildRequires:	python-devel
+BuildRequires:	rpm-pythonprov
+BuildRequires:	ruby-devel
+BuildRequires:	swig-python >= 1.3.29
+BuildRequires:	swig-ruby >= 1.3.29
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -67,11 +71,21 @@ Python bindings for Geometry Engine - Open Source.
 %description -n python-geos -l pl
 Wi±zania Pythona do biblioteki GEOS.
 
+%package -n ruby-geos
+Summary:	Ruby bindings for Geometry Engine - Open Source
+Summary(pl):	Wi±zania jêzyka Ruby do biblioteki GEOS
+Group:		Development/Languages/Python
+Requires:	%{name} = %{version}-%{release}
+
+%description -n ruby-geos
+Ruby bindings for Geometry Engine - Open Source.
+
+%description -n ruby-geos -l pl
+Wi±zania jêzyka Ruby do biblioteki GEOS.
+
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 cp -f /usr/share/automake/config.* .
@@ -83,6 +97,11 @@ cd swig/python
 swig -c++ -python -modern -o geos_wrap.cxx ../geos.i
 python setup.py build
 
+cd ../ruby
+swig -c++ -ruby -autorename -o geos_wrap.cxx ../geos.i
+%{__cxx} %{rpmcxxflags} -I../../source/headers -I%{ruby_archdir} -c geos_wrap.cxx
+%{__cxx} -shared -o geos.so geos_wrap.o -lruby -L../../source/geom/.libs -lgeos
+
 %install
 rm -rf $RPM_BUILD_ROOT
 
@@ -92,6 +111,9 @@ rm -rf $RPM_BUILD_ROOT
 
 cd swig/python
 python setup.py install --root=$RPM_BUILD_ROOT
+
+cd ../ruby
+install -D geos.so $RPM_BUILD_ROOT%{ruby_archdir}/geos.so
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -125,3 +147,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{py_sitedir}/geos.pyc
 %attr(755,root,root) %{py_sitedir}/_geos.so
+
+%files -n ruby-geos
+%defattr(644,root,root,755)
+%attr(755,root,root) %{ruby_archdir}/geos.so
