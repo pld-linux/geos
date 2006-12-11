@@ -11,8 +11,8 @@ Patch0:		%{name}-swig.patch
 URL:		http://geos.refractions.net/
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
-BuildRequires:	python
-BuildRequires:	python-devel
+BuildRequires:	python >= 1:2.5
+BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	rpm-pythonprov
 BuildRequires:	ruby-devel
 BuildRequires:	swig-python >= 1.3.29
