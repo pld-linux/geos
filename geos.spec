@@ -1,12 +1,12 @@
 Summary:	Geometry Engine - Open Source
 Summary(pl):	GEOS - silnik geometryczny z otwartymi ¼ród³ami
 Name:		geos
-Version:	2.2.2
+Version:	2.2.3
 Release:	1
 License:	LGPL
 Group:		Libraries
 Source0:	http://geos.refractions.net/%{name}-%{version}.tar.bz2
-# Source0-md5:	daf1f2d863103cc08b17747590af2cef
+# Source0-md5:	440be2b11fd3d711e950a47ea6f1b424
 Patch0:		%{name}-swig.patch
 URL:		http://geos.refractions.net/
 BuildRequires:	automake
@@ -109,11 +109,15 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	pkglibdir=%{_libdir}
 
-cd swig/python
-python setup.py install --root=$RPM_BUILD_ROOT
+cd swig
+install -D ruby/geos.so $RPM_BUILD_ROOT%{ruby_archdir}/geos.so
 
-cd ../ruby
-install -D geos.so $RPM_BUILD_ROOT%{ruby_archdir}/geos.so
+cd python
+python setup.py install \
+	--optimize=2 \
+	--root=$RPM_BUILD_ROOT
+
+%py_postclean
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -123,7 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS TODO
+%doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_libdir}/libgeos.so.*.*.*
 %attr(755,root,root) %{_libdir}/libgeos_c.so.*.*.*
 
@@ -145,8 +149,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n python-geos
 %defattr(644,root,root,755)
-%{py_sitedir}/geos.pyc
 %attr(755,root,root) %{py_sitedir}/_geos.so
+%{py_sitedir}/geos.py[co]
+%{py_sitedir}/PyGEOS-*.egg-info
 
 %files -n ruby-geos
 %defattr(644,root,root,755)
