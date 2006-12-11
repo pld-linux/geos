@@ -151,7 +151,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{py_sitedir}/_geos.so
 %{py_sitedir}/geos.py[co]
-%{py_sitedir}/PyGEOS-*.egg-info
 
 %files -n ruby-geos
 %defattr(644,root,root,755)
