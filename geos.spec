@@ -1,5 +1,5 @@
 Summary:	Geometry Engine - Open Source
-Summary(pl):	GEOS - silnik geometryczny z otwartymi 紃骴砤mi
+Summary(pl.UTF-8):   GEOS - silnik geometryczny z otwartymi 藕r贸d艂ami
 Name:		geos
 Version:	2.2.3
 Release:	1
@@ -26,17 +26,17 @@ functionality of JTS in C++. This includes all the OpenGIS "Simple
 Features for SQL" spatial predicate functions and spatial operators,
 as well as specific JTS topology functions such as IsValid().
 
-%description -l pl
+%description -l pl.UTF-8
 GEOS (Geometry Engine - Open Source, czyli silnik geometryczny z
-otwartymi 紃骴砤mi) to port C++ biblioteki Java Topology Suite (JTS).
-Celem biblioteki jako takiej jest implementacja pe硁ej funkcjonalno禼i
-JTS w C++. Obejmuje to wszystkie funkcje predykat體 przestrzennych
+otwartymi 藕r贸d艂ami) to port C++ biblioteki Java Topology Suite (JTS).
+Celem biblioteki jako takiej jest implementacja pe艂nej funkcjonalno艣ci
+JTS w C++. Obejmuje to wszystkie funkcje predykat贸w przestrzennych
 wg "Simple Features for SQL" OpenGIS oraz operatory przestrzenne, a
-tak縠 specyficzne dla JTS funkcje topologiczne takie jak IsValid().
+tak偶e specyficzne dla JTS funkcje topologiczne takie jak IsValid().
 
 %package devel
 Summary:	Header files for GEOS library
-Summary(pl):	Pliki nag丑wkowe biblioteki GEOS
+Summary(pl.UTF-8):   Pliki nag艂贸wkowe biblioteki GEOS
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	libstdc++-devel
@@ -44,44 +44,44 @@ Requires:	libstdc++-devel
 %description devel
 Header files for GEOS library.
 
-%description devel -l pl
-Pliki nag丑wkowe biblioteki GEOS.
+%description devel -l pl.UTF-8
+Pliki nag艂贸wkowe biblioteki GEOS.
 
 %package static
 Summary:	Static GEOS library
-Summary(pl):	Statyczna biblioteka GEOS
+Summary(pl.UTF-8):   Statyczna biblioteka GEOS
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static GEOS library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna biblioteka GEOS.
 
 %package -n python-geos
 Summary:	Python bindings for Geometry Engine - Open Source
-Summary(pl):	Wi眤ania Pythona do biblioteki GEOS
+Summary(pl.UTF-8):   Wi膮zania Pythona do biblioteki GEOS
 Group:		Development/Languages/Python
 Requires:	%{name} = %{version}-%{release}
 
 %description -n python-geos
 Python bindings for Geometry Engine - Open Source.
 
-%description -n python-geos -l pl
-Wi眤ania Pythona do biblioteki GEOS.
+%description -n python-geos -l pl.UTF-8
+Wi膮zania Pythona do biblioteki GEOS.
 
 %package -n ruby-geos
 Summary:	Ruby bindings for Geometry Engine - Open Source
-Summary(pl):	Wi眤ania j陑yka Ruby do biblioteki GEOS
+Summary(pl.UTF-8):   Wi膮zania j臋zyka Ruby do biblioteki GEOS
 Group:		Development/Languages/Python
 Requires:	%{name} = %{version}-%{release}
 
 %description -n ruby-geos
 Ruby bindings for Geometry Engine - Open Source.
 
-%description -n ruby-geos -l pl
-Wi眤ania j陑yka Ruby do biblioteki GEOS.
+%description -n ruby-geos -l pl.UTF-8
+Wi膮zania j臋zyka Ruby do biblioteki GEOS.
 
 %prep
 %setup -q
