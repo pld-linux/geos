@@ -1,5 +1,5 @@
 Summary:	Geometry Engine - Open Source
-Summary(pl.UTF-8):   GEOS - silnik geometryczny z otwartymi źródłami
+Summary(pl.UTF-8):	GEOS - silnik geometryczny z otwartymi źródłami
 Name:		geos
 Version:	2.2.3
 Release:	1
@@ -36,7 +36,7 @@ także specyficzne dla JTS funkcje topologiczne takie jak IsValid().
 
 %package devel
 Summary:	Header files for GEOS library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki GEOS
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki GEOS
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	libstdc++-devel
@@ -49,7 +49,7 @@ Pliki nagłówkowe biblioteki GEOS.
 
 %package static
 Summary:	Static GEOS library
-Summary(pl.UTF-8):   Statyczna biblioteka GEOS
+Summary(pl.UTF-8):	Statyczna biblioteka GEOS
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -61,7 +61,7 @@ Statyczna biblioteka GEOS.
 
 %package -n python-geos
 Summary:	Python bindings for Geometry Engine - Open Source
-Summary(pl.UTF-8):   Wiązania Pythona do biblioteki GEOS
+Summary(pl.UTF-8):	Wiązania Pythona do biblioteki GEOS
 Group:		Development/Languages/Python
 Requires:	%{name} = %{version}-%{release}
 
@@ -73,7 +73,7 @@ Wiązania Pythona do biblioteki GEOS.
 
 %package -n ruby-geos
 Summary:	Ruby bindings for Geometry Engine - Open Source
-Summary(pl.UTF-8):   Wiązania języka Ruby do biblioteki GEOS
+Summary(pl.UTF-8):	Wiązania języka Ruby do biblioteki GEOS
 Group:		Development/Languages/Python
 Requires:	%{name} = %{version}-%{release}
 
