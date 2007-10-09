@@ -1,3 +1,6 @@
+# Conditional build:
+%bcond_without ruby # build without ruby
+#
 Summary:	Geometry Engine - Open Source
 Summary(pl.UTF-8):	GEOS - silnik geometryczny z otwartymi źródłami
 Name:		geos
@@ -14,9 +17,9 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	python >= 1:2.5
 BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	rpm-pythonprov
-BuildRequires:	ruby-devel
+%{?with_ruby:BuildRequires:	ruby-devel}
 BuildRequires:	swig-python >= 1.3.29
-BuildRequires:	swig-ruby >= 1.3.29
+%{?with_ruby:BuildRequires:	swig-ruby >= 1.3.29}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -97,10 +100,12 @@ cd swig/python
 swig -c++ -python -modern -o geos_wrap.cxx ../geos.i
 python setup.py build
 
+%if %{with ruby}
 cd ../ruby
 swig -c++ -ruby -autorename -o geos_wrap.cxx ../geos.i
 %{__cxx} %{rpmcxxflags} -I../../source/headers -I%{ruby_archdir} -c geos_wrap.cxx
 %{__cxx} -shared -o geos.so geos_wrap.o -lruby -L../../source/geom/.libs -lgeos
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -110,7 +115,9 @@ rm -rf $RPM_BUILD_ROOT
 	pkglibdir=%{_libdir}
 
 cd swig
+%if %{with ruby}
 install -D ruby/geos.so $RPM_BUILD_ROOT%{ruby_archdir}/geos.so
+%endif
 
 cd python
 python setup.py install \
@@ -153,6 +160,8 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitedir}/geos.py[co]
 %{py_sitedir}/PyGEOS-*.egg-info
 
+%if %{with ruby}
 %files -n ruby-geos
 %defattr(644,root,root,755)
 %attr(755,root,root) %{ruby_archdir}/geos.so
+%endif
