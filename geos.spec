@@ -1,22 +1,23 @@
+#
 # Conditional build:
-%bcond_without ruby # build without ruby
+%bcond_without	ruby	# ruby binding
 #
 Summary:	Geometry Engine - Open Source
 Summary(pl.UTF-8):	GEOS - silnik geometryczny z otwartymi źródłami
 Name:		geos
 Version:	3.0.0
-%define	_rc	rc4
-Release:	0.%{_rc}.1
-License:	LGPL
+Release:	1
+License:	LGPL v2.1
 Group:		Libraries
-Source0:	http://geos.refractions.net/%{name}-%{version}%{_rc}.tar.bz2
-# Source0-md5:	90d4dba51dd75f8f1f12378e0f910d76
+Source0:	http://geos.refractions.net/downloads/%{name}-%{version}.tar.bz2
+# Source0-md5:	3f7940abee9fec69a9787878cd3ae771
 URL:		http://geos.refractions.net/
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
 BuildRequires:	python >= 1:2.5
 BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(macros) >= 1.219
 %{?with_ruby:BuildRequires:	ruby-devel}
 BuildRequires:	swig-python >= 1.3.29
 %{?with_ruby:BuildRequires:	swig-ruby >= 1.3.29}
@@ -87,7 +88,7 @@ Ruby bindings for Geometry Engine - Open Source.
 Wiązania języka Ruby do biblioteki GEOS.
 
 %prep
-%setup -q -n %{name}-%{version}%{_rc}
+%setup -q
 
 %build
 cp -f /usr/share/automake/config.* .
@@ -103,8 +104,10 @@ cp -f /usr/share/automake/config.* .
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	pkglibdir=%{_libdir}
+	DESTDIR=$RPM_BUILD_ROOT
+
+%{?with_ruby:rm -f $RPM_BUILD_ROOT%{ruby_sitearchdir}/*.{la,a}}
+rm -f $RPM_BUILD_ROOT%{py_sitedir}/geos/*.{la,a}
 
 %py_postclean
 
@@ -117,10 +120,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
-# fixme?:
-%attr(755,root,root) %{_libdir}/libgeos-3.0*.so
-#%attr(755,root,root) %{_libdir}/libgeos.so.*.*.*
+%attr(755,root,root) %{_libdir}/libgeos-3.0.0.so
 %attr(755,root,root) %{_libdir}/libgeos_c.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgeos_c.so.1
 
 %files devel
 %defattr(644,root,root,755)
@@ -142,10 +144,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %dir %{py_sitedir}/geos
 %attr(755,root,root) %{py_sitedir}/geos/_geos.so
-%{py_sitescriptdir}/geos*
+%{py_sitescriptdir}/geos
+%{py_sitescriptdir}/geos.pth
 
 %if %{with ruby}
 %files -n ruby-geos
 %defattr(644,root,root,755)
-%attr(755,root,root) %{ruby_archdir}/geos.so
+%attr(755,root,root) %{ruby_sitearchdir}/geos.so
 %endif
