@@ -1,3 +1,5 @@
+# TODO
+# - unpackaged:    /usr/bin/XMLTester
 #
 # Conditional build:
 %bcond_without	ruby	# ruby binding
