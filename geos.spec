@@ -14,8 +14,8 @@ Source0:	http://geos.refractions.net/downloads/%{name}-%{version}.tar.bz2
 URL:		http://geos.refractions.net/
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
-BuildRequires:	python >= 1:2.5
-BuildRequires:	python-devel >= 1:2.5
+BuildRequires:	python
+BuildRequires:	python-devel
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
 %{?with_ruby:BuildRequires:	ruby-devel}
