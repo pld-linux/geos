@@ -8,11 +8,12 @@ Summary:	Geometry Engine - Open Source
 Summary(pl.UTF-8):	GEOS - silnik geometryczny z otwartymi źródłami
 Name:		geos
 Version:	3.0.0
-Release:	1
+Release:	2
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://geos.refractions.net/downloads/%{name}-%{version}.tar.bz2
 # Source0-md5:	3f7940abee9fec69a9787878cd3ae771
+Patch0:		%{name}-gcc43.patch
 URL:		http://geos.refractions.net/
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
@@ -91,6 +92,7 @@ Wiązania języka Ruby do biblioteki GEOS.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 cp -f /usr/share/automake/config.* .
