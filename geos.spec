@@ -7,14 +7,15 @@
 Summary:	Geometry Engine - Open Source
 Summary(pl.UTF-8):	GEOS - silnik geometryczny z otwartymi źródłami
 Name:		geos
-Version:	3.1.1
+Version:	3.2.0
 Release:	1
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://download.osgeo.org/geos/%{name}-%{version}.tar.bz2
-# Source0-md5:	196f4424aa4ef94476e6886d3a964fb6
-Patch0:		%{name}-gcc43.patch
+# Source0-md5:	bfad7129680f0107b6ca9a2b92a2c440
+Patch0:		%{name}-ruby1.9.patch
 URL:		http://trac.osgeo.org/geos/
+BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
 BuildRequires:	python
@@ -23,7 +24,7 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
 %{?with_ruby:BuildRequires:	ruby-devel}
 BuildRequires:	swig-python >= 1.3.29
-%{?with_ruby:BuildRequires:	swig-ruby >= 1.3.29}
+%{?with_ruby:BuildRequires:	swig-ruby >= 1.3.40-3}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -92,10 +93,13 @@ Wiązania języka Ruby do biblioteki GEOS.
 
 %prep
 %setup -q
-#%patch0 -p1
+%patch0 -p1
 
 %build
-cp -f /usr/share/automake/config.* .
+%{__aclocal} -I macros
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	--enable-python \
 	%{?with_ruby:--enable-ruby}
