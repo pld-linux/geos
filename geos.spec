@@ -14,6 +14,7 @@ Group:		Libraries
 Source0:	http://download.osgeo.org/geos/%{name}-%{version}.tar.bz2
 # Source0-md5:	c5d264acac22fe7720f85dadc1fc17c6
 Patch0:		%{name}-ruby1.9.patch
+Patch1:		%{name}-swig2.patch
 URL:		http://trac.osgeo.org/geos/
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
@@ -94,6 +95,7 @@ Wiązania języka Ruby do biblioteki GEOS.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__aclocal} -I macros
