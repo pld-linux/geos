@@ -7,7 +7,7 @@ Summary:	Geometry Engine - Open Source
 Summary(pl.UTF-8):	GEOS - silnik geometryczny z otwartymi źródłami
 Name:		geos
 Version:	3.3.8
-Release:	1
+Release:	2
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://download.osgeo.org/geos/%{name}-%{version}.tar.bz2
@@ -118,7 +118,11 @@ Wiązania języka Ruby do biblioteki GEOS.
 %configure \
 	%{?with_php:--enable-php} \
 	--enable-python \
-	%{?with_ruby:--enable-ruby}
+%if %{with ruby}
+	RUBY_EXTENSION_DIR=%{ruby_vendorarchdir} \
+	--enable-ruby \
+%endif
+
 
 %{__make} \
 	pkglibdir=%{_libdir}
@@ -190,5 +194,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with ruby}
 %files -n ruby-geos
 %defattr(644,root,root,755)
-%attr(755,root,root) %{ruby_sitearchdir}/geos.so
+%attr(755,root,root) %{ruby_vendorarchdir}/geos.so
 %endif
