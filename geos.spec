@@ -7,13 +7,14 @@ Summary:	Geometry Engine - Open Source
 Summary(pl.UTF-8):	GEOS - silnik geometryczny z otwartymi źródłami
 Name:		geos
 Version:	3.3.8
-Release:	2
+Release:	3
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://download.osgeo.org/geos/%{name}-%{version}.tar.bz2
 # Source0-md5:	75be476d0831a2d14958fed76ca266de
 Patch0:		%{name}-ruby1.9.patch
 Patch1:		%{name}-am.patch
+Patch2:		rubydir.patch
 URL:		http://trac.osgeo.org/geos/
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
@@ -109,6 +110,7 @@ Wiązania języka Ruby do biblioteki GEOS.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__aclocal} -I macros
@@ -118,10 +120,7 @@ Wiązania języka Ruby do biblioteki GEOS.
 %configure \
 	%{?with_php:--enable-php} \
 	--enable-python \
-%if %{with ruby}
-	--enable-ruby \
-%endif
-
+	%{?with_ruby:--enable-ruby}
 
 %{__make} \
 	pkglibdir=%{_libdir}
@@ -131,7 +130,6 @@ Wiązania języka Ruby do biblioteki GEOS.
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	rubyextensiondir=%{ruby_vendorarchdir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %if %{with php}
@@ -142,7 +140,7 @@ extension=geos.so
 EOF
 %endif
 
-%{?with_ruby:%{__rm} $RPM_BUILD_ROOT%{ruby_sitearchdir}/*.{la,a}}
+%{?with_ruby:%{__rm} $RPM_BUILD_ROOT%{ruby_vendorarchdir}/*.{la,a}}
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/geos/*.{la,a}
 
 %py_postclean
