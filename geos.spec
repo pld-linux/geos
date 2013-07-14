@@ -119,7 +119,6 @@ Wiązania języka Ruby do biblioteki GEOS.
 	%{?with_php:--enable-php} \
 	--enable-python \
 %if %{with ruby}
-	RUBY_EXTENSION_DIR=%{ruby_vendorarchdir} \
 	--enable-ruby \
 %endif
 
@@ -132,6 +131,7 @@ Wiązania języka Ruby do biblioteki GEOS.
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
+	rubyextensiondir=%{ruby_vendorarchdir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %if %{with php}
