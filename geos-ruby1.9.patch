@@ -1,52 +1,11 @@
---- geos-3.2.0/macros/ruby.m4~	2007-09-07 01:22:38.000000000 +0200
-+++ geos-3.2.0/macros/ruby.m4	2010-03-02 14:29:47.012190992 +0100
-@@ -25,8 +25,9 @@
- 		dnl Get Ruby bin directory
- 		RUBY_BIN_DIR=`$RUBY -rrbconfig -e 'puts Config::CONFIG[["bindir"]]'`
+--- geos-3.4.1/macros/ruby.m4.orig	2013-08-25 17:35:18.906527499 +0200
++++ geos-3.4.1/macros/ruby.m4	2013-08-25 17:53:45.516481059 +0200
+@@ -38,7 +38,7 @@
+ 		RUBY_EXTENSION_DIR=`$RUBY -rrbconfig -e 'puts RbConfig::CONFIG[["vendorarchdir"]] || Config::CONFIG[["vendorarchdir"]]'`
+ 
+ 		dnl Get Ruby shared library name, this does not include the lib prefix or extension name
+-		RUBY_SO_NAME=`$RUBY -rrbconfig -e 'puts RbConfig::CONFIG[["LIBRUBY_SO"]] || Config::CONFIG[["RUBY_SO_NAME"]]'`
++		RUBY_SO_NAME=`$RUBY -rrbconfig -e 'puts RbConfig::CONFIG[["RUBY_SO_NAME"]] || Config::CONFIG[["RUBY_SO_NAME"]]'`
  		
--		dnl Get Ruby include directory
--		RUBY_INCLUDE_DIR=`$RUBY -rrbconfig -e 'puts Config::CONFIG[["archdir"]]'`
-+		dnl Get Ruby include directories
-+		RUBY_INCLUDE_DIR=`$RUBY -rrbconfig -e 'puts Config::CONFIG[["rubyhdrdir"]]'`
-+		RUBY_ARCHINCLUDE_DIR=`$RUBY -rrbconfig -e 'puts RbConfig.expand("$(rubyhdrdir)/$(arch)")'`
- 	
- 		dnl Get Ruby lib directory
- 		RUBY_LIB_DIR=`$RUBY -rrbconfig -e 'puts Config::CONFIG[["libdir"]]'`
-@@ -44,6 +45,7 @@
-     AC_MSG_NOTICE([Ruby version is '$RUBY_VERSION'])
-     AC_MSG_NOTICE([Ruby bin directory is '$RUBY_BIN_DIR'])
-     AC_MSG_NOTICE([Ruby include directory is '$RUBY_INCLUDE_DIR'])
-+    AC_MSG_NOTICE([Ruby arch include directory is '$RUBY_ARCHINCLUDE_DIR'])
-     AC_MSG_NOTICE([Ruby library directory is '$RUBY_LIB_DIR'])
-     AC_MSG_NOTICE([Ruby extension directory is '$RUBY_EXTENSION_DIR'])
-     AC_MSG_NOTICE([Ruby library is '$RUBY_SO_NAME'])
-@@ -52,6 +54,7 @@
-     AC_SUBST([RUBY_VERSION])
-     AC_SUBST([RUBY_BIN_DIR])
-     AC_SUBST([RUBY_INCLUDE_DIR])
-+    AC_SUBST([RUBY_ARCHINCLUDE_DIR])
-     AC_SUBST([RUBY_LIB_DIR])
-     AC_SUBST([RUBY_EXTENSION_DIR])
-     AC_SUBST([RUBY_SO_NAME])
---- geos-3.2.0/swig/ruby/Makefile.am~	2007-08-31 22:18:15.000000000 +0200
-+++ geos-3.2.0/swig/ruby/Makefile.am	2010-03-02 14:30:59.197124565 +0100
-@@ -14,7 +14,7 @@
- rubyextensiondirdir = $(RUBY_EXTENSION_DIR)
- 
- # Setup includes
--INCLUDES = -I$(RUBY_INCLUDE_DIR)
-+INCLUDES = -I$(RUBY_INCLUDE_DIR) -I$(RUBY_ARCHINCLUDE_DIR)
- 
- # Build Ruby module as shared library
- rubyextensiondir_LTLIBRARIES = geos.la
---- geos-3.2.0/swig/ruby/ruby.i~	2009-07-15 20:56:30.000000000 +0200
-+++ geos-3.2.0/swig/ruby/ruby.i	2010-03-02 17:02:01.176123831 +0100
-@@ -75,7 +75,7 @@
-         Check_Type($input, T_ARRAY);
- 
-         /* Get the length */
--        $2 = RARRAY($input)->len;
-+        $2 = RARRAY_LEN($input);
-       
-         /* Allocate space for the C array. */
-         $1 = (GeosLinearRing**) malloc($2*sizeof(GeosLinearRing*));
+ 		dnl Get Ruby shared libary name
+ 		RUBY_SHARED_LIB=`$RUBY -rrbconfig -e 'puts RbConfig::CONFIG[["LIBRUBY"]] || Config::CONFIG[["LIBRUBY"]]'`

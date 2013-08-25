@@ -1,11 +1,11 @@
---- geos-3.3.8/macros/ruby.m4~	2013-07-14 21:24:58.543846706 +0200
-+++ geos-3.3.8/macros/ruby.m4	2013-07-14 21:34:50.456329482 +0200
-@@ -33,7 +33,7 @@
- 		RUBY_LIB_DIR=`$RUBY -rrbconfig -e 'puts Config::CONFIG[["libdir"]]'`
+--- geos-3.4.1/macros/ruby.m4.orig	2013-08-25 17:32:42.246534073 +0200
++++ geos-3.4.1/macros/ruby.m4	2013-08-25 17:34:56.293195116 +0200
+@@ -35,7 +35,7 @@
+ 		RUBY_LIB_DIR=`$RUBY -rrbconfig -e 'puts RbConfig::CONFIG[["libdir"]] || Config::CONFIG[["libdir"]]'`
  
  		dnl Get Ruby extensions directory
--		RUBY_EXTENSION_DIR=`$RUBY -rrbconfig -e 'puts Config::CONFIG[["sitearchdir"]]'`
-+		RUBY_EXTENSION_DIR=`$RUBY -rrbconfig -e 'puts Config::CONFIG[["vendorarchdir"]]'`
+-		RUBY_EXTENSION_DIR=`$RUBY -rrbconfig -e 'puts RbConfig::CONFIG[["sitearchdir"]] || Config::CONFIG[["sitearchdir"]]'`
++		RUBY_EXTENSION_DIR=`$RUBY -rrbconfig -e 'puts RbConfig::CONFIG[["vendorarchdir"]] || Config::CONFIG[["vendorarchdir"]]'`
  
  		dnl Get Ruby shared library name, this does not include the lib prefix or extension name
- 		RUBY_SO_NAME=`$RUBY -rrbconfig -e 'puts Config::CONFIG[["RUBY_SO_NAME"]]'`
+ 		RUBY_SO_NAME=`$RUBY -rrbconfig -e 'puts RbConfig::CONFIG[["LIBRUBY_SO"]] || Config::CONFIG[["RUBY_SO_NAME"]]'`
