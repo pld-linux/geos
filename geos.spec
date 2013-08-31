@@ -6,12 +6,12 @@
 Summary:	Geometry Engine - Open Source
 Summary(pl.UTF-8):	GEOS - silnik geometryczny z otwartymi źródłami
 Name:		geos
-Version:	3.4.1
+Version:	3.4.2
 Release:	1
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://download.osgeo.org/geos/%{name}-%{version}.tar.bz2
-# Source0-md5:	4c930dec44c45c49cd71f3e0931ded7e
+# Source0-md5:	fc5df2d926eb7e67f988a43a92683bae
 Patch0:		%{name}-ruby1.9.patch
 Patch1:		rubydir.patch
 URL:		http://trac.osgeo.org/geos/
