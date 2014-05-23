@@ -2,12 +2,12 @@
 # Conditional build:
 %bcond_without	php	# PHP binding
 %bcond_without	ruby	# ruby binding
-#
+
 Summary:	Geometry Engine - Open Source
 Summary(pl.UTF-8):	GEOS - silnik geometryczny z otwartymi źródłami
 Name:		geos
 Version:	3.4.2
-Release:	3
+Release:	4
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://download.osgeo.org/geos/%{name}-%{version}.tar.bz2
@@ -18,7 +18,7 @@ URL:		http://trac.osgeo.org/geos/
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
-%{?with_php:BuildRequires:	php-devel}
+%{?with_php:BuildRequires:	%{php_name}-devel}
 BuildRequires:	python
 BuildRequires:	python-devel
 BuildRequires:	rpm-pythonprov
@@ -68,17 +68,17 @@ Static GEOS library.
 %description static -l pl.UTF-8
 Statyczna biblioteka GEOS.
 
-%package -n php-geos
+%package -n %{php_name}-geos
 Summary:	PHP bindings for Geometry Engine - Open Source
 Summary(pl.UTF-8):	Wiązania PHP do biblioteki GEOS
 Group:		Development/Languages/PHP
 Requires:	%{name} = %{version}-%{release}
 %{?requires_php_extension}
 
-%description -n php-geos
+%description -n %{php_name}-geos
 PHP bindings for Geometry Engine - Open Source.
 
-%description -n php-geos -l pl.UTF-8
+%description -n %{php_name}-geos -l pl.UTF-8
 Wiązania PHP do biblioteki GEOS.
 
 %package -n python-geos
@@ -173,7 +173,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libgeos_c.a
 
 %if %{with php}
-%files -n php-geos
+%files -n %{php_name}-geos
 %defattr(644,root,root,755)
 %doc php/{README,TODO}
 %config(noreplace) %verify(not md5 mtime size) %{php_sysconfdir}/conf.d/geos.ini
