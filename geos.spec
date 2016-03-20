@@ -3,6 +3,7 @@
 %bcond_without	php	# PHP binding
 %bcond_without	ruby	# ruby binding
 
+%define		php_name	php55
 Summary:	Geometry Engine - Open Source
 Summary(pl.UTF-8):	GEOS - silnik geometryczny z otwartymi źródłami
 Name:		geos
@@ -15,10 +16,10 @@ Source0:	http://download.osgeo.org/geos/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-php7.patch
 Patch1:		rubydir.patch
 URL:		http://trac.osgeo.org/geos/
+%{?with_php:BuildRequires:	%{php_name}-devel}
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
-%{?with_php:BuildRequires:	%{php_name}-devel}
 BuildRequires:	python
 BuildRequires:	python-devel
 BuildRequires:	rpm-pythonprov
@@ -39,9 +40,9 @@ as well as specific JTS topology functions such as IsValid().
 GEOS (Geometry Engine - Open Source, czyli silnik geometryczny z
 otwartymi źródłami) to port C++ biblioteki Java Topology Suite (JTS).
 Celem biblioteki jako takiej jest implementacja pełnej funkcjonalności
-JTS w C++. Obejmuje to wszystkie funkcje predykatów przestrzennych
-wg "Simple Features for SQL" OpenGIS oraz operatory przestrzenne, a
-także specyficzne dla JTS funkcje topologiczne takie jak IsValid().
+JTS w C++. Obejmuje to wszystkie funkcje predykatów przestrzennych wg
+"Simple Features for SQL" OpenGIS oraz operatory przestrzenne, a także
+specyficzne dla JTS funkcje topologiczne takie jak IsValid().
 
 %package devel
 Summary:	Header files for GEOS library
