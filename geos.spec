@@ -1,22 +1,18 @@
 #
 # Conditional build:
-%bcond_without	php	# PHP binding
 %bcond_without	ruby	# ruby binding
 
-%define		php_name	php55
 Summary:	Geometry Engine - Open Source
 Summary(pl.UTF-8):	GEOS - silnik geometryczny z otwartymi źródłami
 Name:		geos
-Version:	3.5.0
-Release:	3
+Version:	3.6.1
+Release:	1
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://download.osgeo.org/geos/%{name}-%{version}.tar.bz2
-# Source0-md5:	136842690be7f504fba46b3c539438dd
-Patch0:		%{name}-php7.patch
-Patch1:		rubydir.patch
+# Source0-md5:	c97e338b3bc81f9848656e9d693ca6cc
+Patch0:		rubydir.patch
 URL:		http://trac.osgeo.org/geos/
-%{?with_php:BuildRequires:	%{php_name}-devel}
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
@@ -69,19 +65,6 @@ Static GEOS library.
 %description static -l pl.UTF-8
 Statyczna biblioteka GEOS.
 
-%package -n %{php_name}-geos
-Summary:	PHP bindings for Geometry Engine - Open Source
-Summary(pl.UTF-8):	Wiązania PHP do biblioteki GEOS
-Group:		Development/Languages/PHP
-Requires:	%{name} = %{version}-%{release}
-%{?requires_php_extension}
-
-%description -n %{php_name}-geos
-PHP bindings for Geometry Engine - Open Source.
-
-%description -n %{php_name}-geos -l pl.UTF-8
-Wiązania PHP do biblioteki GEOS.
-
 %package -n python-geos
 Summary:	Python bindings for Geometry Engine - Open Source
 Summary(pl.UTF-8):	Wiązania Pythona do biblioteki GEOS
@@ -109,7 +92,6 @@ Wiązania języka Ruby do biblioteki GEOS.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__aclocal} -I macros
@@ -117,13 +99,11 @@ Wiązania języka Ruby do biblioteki GEOS.
 %{__autoheader}
 %{__automake}
 %configure \
-	%{?with_php:--enable-php} \
 	--enable-python \
 	%{?with_ruby:--enable-ruby}
 
 %{__make} \
 	pkglibdir=%{_libdir}
-
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -131,14 +111,6 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	pythondir=%{py_sitescriptdir}
-
-%if %{with php}
-install -d $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d
-cat <<'EOF' > $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d/geos.ini
-; Enable geos extension module
-extension=geos.so
-EOF
-%endif
 
 %{?with_ruby:%{__rm} $RPM_BUILD_ROOT%{ruby_vendorarchdir}/*.{la,a}}
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/geos/*.{la,a}
@@ -153,7 +125,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS NEWS README TODO
 %attr(755,root,root) %{_libdir}/libgeos-%{version}.so
 %attr(755,root,root) %{_libdir}/libgeos_c.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgeos_c.so.1
@@ -173,14 +145,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libgeos.a
 %{_libdir}/libgeos_c.a
-
-%if %{with php}
-%files -n %{php_name}-geos
-%defattr(644,root,root,755)
-%doc php/{README,TODO}
-%config(noreplace) %verify(not md5 mtime size) %{php_sysconfdir}/conf.d/geos.ini
-%attr(755,root,root) %{php_extensiondir}/geos.so
-%endif
 
 %files -n python-geos
 %defattr(644,root,root,755)
