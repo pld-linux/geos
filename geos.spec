@@ -5,17 +5,17 @@
 Summary:	Geometry Engine - Open Source
 Summary(pl.UTF-8):	GEOS - silnik geometryczny z otwartymi źródłami
 Name:		geos
-Version:	3.6.2
-Release:	2
+Version:	3.7.1
+Release:	1
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://download.osgeo.org/geos/%{name}-%{version}.tar.bz2
-# Source0-md5:	a32142343c93d3bf151f73db3baa651f
+# Source0-md5:	62149456d21dabee44999f644c986ab0
 Patch0:		rubydir.patch
 URL:		http://trac.osgeo.org/geos/
-BuildRequires:	autoconf >= 2.52
+BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake
-BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	python
 BuildRequires:	python-devel
 BuildRequires:	rpm-pythonprov
@@ -45,7 +45,7 @@ Summary:	Header files for GEOS library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki GEOS
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	libstdc++-devel
+Requires:	libstdc++-devel >= 6:4.7
 
 %description devel
 Header files for GEOS library.
@@ -125,7 +125,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS NEWS README TODO
+%doc AUTHORS ChangeLog NEWS README.md TODO
 %attr(755,root,root) %{_libdir}/libgeos-%{version}.so
 %attr(755,root,root) %{_libdir}/libgeos_c.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgeos_c.so.1
